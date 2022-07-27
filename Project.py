@@ -2,7 +2,8 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pydeck as pdk
-import plotly.express as px#use only with tidy data frames
+import matplotlib.pyplot as plt
+
 
 DATA_URL = (
 "C:\\Users\\KIIT\Desktop\\Coding\\Data Analytics project\\Motor_Vehicle_Collisions_-_Crashes.csv"
@@ -61,7 +62,7 @@ st.subheader("Breakdown by minute between %i:00 and %i:00"%(hour,(hour+1)%24))
 filtered = data[(data['Date/Time'].dt.hour >=hour) & (data['Date/Time'].dt.hour<(hour +1))]
 hist = np.histogram(filtered['Date/Time'].dt.minute,bins=60,range=(0,60))[0]
 chart_data = pd.DataFrame({'minute': range(60),'crashes':hist})
-fig= px.bar(chart_data, x='minute',y='crashes', hover_data=['minute','crashes'], height=400)
+fig= plt.bar(chart_data, x='minute',y='crashes', hover_data=['minute','crashes'], height=400)
 st.write(fig)
 
 st.header("5 Most dangerous streets by affected type")
@@ -76,3 +77,4 @@ else:
 if st.checkbox("Show Raw Data",False):
     st.subheader("Raw Data")
     st.write(data)
+
